@@ -39,7 +39,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two equal columns */
     gap: 32px;
-    margin-bottom: 60px;
+    margin-bottom: 80px; /* Increased margin for better separation between project sets */
     align-items: start;
   }
 
@@ -86,15 +86,14 @@
 
   .card img {
     width: 100%;
-    height: 280px; /* Adjust this height to your liking */
-    object-fit: cover; /* Keeps aspect ratio same by cropping slightly if needed */
+    height: 280px; 
+    object-fit: cover; 
     display: block;
     background: #1c212a;
   }
 
   .card-content {
     padding: 16px;
-    /* Keeps the bottom text area consistent */
     min-height: 80px; 
   }
 
@@ -133,7 +132,7 @@
 <header>
   <h1>tiny projects by marie</h1>
   <p>mix of experiments ✦</p>
-  <a href="https://github.com/mariecjl" style="color: white;">for more and currents: github.com/mariecjl</a>
+  <a href="https://github.com/mariecjl" style="color: white; text-decoration: none; border-bottom: 1px solid #444;">for more and currents: github.com/mariecjl</a>
 </header>
 
 <div class="container">
@@ -164,6 +163,38 @@
         <div class="card-content">
           <h3 class="card-title">take notes & query any confusions</h3>
           <p class="card-desc">understand every concept as you write -- tailor level of expertise as you wish!</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="project-row">
+    
+    <div class="project-panel">
+      <div class="project-header">
+        <h2 class="project-title">weather patterns</h2>
+        <p class="project-desc">a visual exploration of local climate data over the last decade.</p>
+      </div>
+
+      <a class="card" href="#">
+        <img src="weather-preview.jpg"> <div class="card-content">
+          <h3 class="card-title">interactive heatmap</h3>
+          <p class="card-desc">view temperature fluctuations through a dynamic, responsive grid.</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="project-panel">
+      <div class="project-header">
+        <h2 class="project-title">pixel garden</h2>
+        <p class="project-desc">a digital playground for growing procedurally generated flora.</p>
+      </div>
+
+      <a class="card" href="#">
+        <img src="garden-preview.jpg"> <div class="card-content">
+          <h3 class="card-title">growth simulator</h3>
+          <p class="card-desc">manipulate sunlight and soil values to see how your digital plants evolve.</p>
         </div>
       </a>
     </div>
