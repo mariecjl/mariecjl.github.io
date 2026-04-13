@@ -1,166 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Projects</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Projects</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: #0f1115;
-      color: #e6e6e6;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: #0f1115;
+    color: #e6e6e6;
+  }
 
-    header {
-      padding: 80px 20px 40px;
-      text-align: center;
-    }
+  header {
+    padding: 80px 20px 40px;
+    text-align: center;
+  }
 
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
-      letter-spacing: 1px;
-    }
+  header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+  }
 
-    header p {
-      color: #a0a0a0;
-      margin-top: 10px;
-      font-size: 1rem;
-    }
+  header p {
+    color: #a0a0a0;
+  }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-    /* 🔥 NEW: side-by-side layout */
+  /* 🔥 ROW SYSTEM */
+  .project-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+    align-items: start;
+  }
+
+  /* single item row spans full width */
+  .project-row.single .project-panel {
+    grid-column: span 2;
+  }
+
+  .project-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+
+  .project-desc {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+  }
+
+  .card {
+    background: #161a22;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+
+  .card img {
+    width: 100%;
+    height: auto; /* original GIF size */
+    display: block;
+  }
+
+  .card-content {
+    padding: 12px 14px;
+  }
+
+  .card-title {
+    margin: 0 0 6px;
+    font-size: 0.95rem;
+  }
+
+  .card-desc {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #a0a0a0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 60px;
+    color: #666;
+  }
+
+  @media (max-width: 800px) {
     .project-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: start;
+      grid-template-columns: 1fr;
     }
-
-    .project-panel {
-      display: flex;
-      flex-direction: column;
+    .project-row.single .project-panel {
+      grid-column: span 1;
     }
-
-    .project-title {
-      font-size: 1.5rem;
-      margin-bottom: 6px;
-    }
-
-    .project-desc {
-      color: #a0a0a0;
-      font-size: 0.9rem;
-      margin-bottom: 14px;
-    }
-
-    /* Card */
-    .card {
-      background: #161a22;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-
-    /* 🔥 FIX: proper GIF/card aspect ratio */
-    .card img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-content {
-      padding: 12px 14px;
-    }
-
-    .card-title {
-      font-size: 0.95rem;
-      margin: 0 0 6px;
-    }
-
-    .card-desc {
-      font-size: 0.8rem;
-      color: #a0a0a0;
-      margin: 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 60px 20px;
-      color: #666;
-      font-size: 0.85rem;
-    }
-
-    /* 🔥 Mobile responsiveness */
-    @media (max-width: 800px) {
-      .project-row {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
 
-  <header>
-    <h1>tiny projects by marie, for fun</h1>
-    <p>in between classes, or when i'm bored ✦</p>
-  </header>
+<header>
+  <h1>tiny projects by marie</h1>
+  <p>mix of experiments ✦</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div class="project-row">
+  <!-- 🔥 PROJECT 1 (PAIR: left + right) -->
+  <div class="project-row">
 
-      <!-- LEFT PROJECT -->
-      <div class="project-panel">
-        <h2 class="project-title">Project One</h2>
-        <p class="project-desc">A cool animation system I built.</p>
+    <div class="project-panel">
+      <h2 class="project-title">Project One</h2>
+      <p class="project-desc">Two-part animation system demo.</p>
 
-        <a class="card" href="#">
-          <img src="highlighter2.gif">
-          <div class="card-content">
-            <h3 class="card-title">Interaction Demo</h3>
-            <p class="card-desc">Smooth motion + hover physics.</p>
-          </div>
-        </a>
-      </div>
+      <a class="card" href="#">
+        <img src="highlighter2.gif">
+        <div class="card-content">
+          <h3 class="card-title">Left Interaction</h3>
+          <p class="card-desc">Hover physics system.</p>
+        </div>
+      </a>
+    </div>
 
-      <!-- RIGHT PROJECT -->
-      <div class="project-panel">
-        <h2 class="project-title">Project Two</h2>
-        <p class="project-desc">Interactive UI concept with motion.</p>
+    <div class="project-panel">
+      <h2 class="project-title">Project One (continued)</h2>
+      <p class="project-desc">Same project, second view.</p>
 
-        <a class="card" href="#">
-          <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif">
-          <div class="card-content">
-            <h3 class="card-title">Concept Demo</h3>
-            <p class="card-desc">Exploring interaction ideas.</p>
-          </div>
-        </a>
-      </div>
-
+      <a class="card" href="#">
+        <img src="highlighter1.gif">
+        <div class="card-content">
+          <h3 class="card-title">Right Interaction</h3>
+          <p class="card-desc">State transitions.</p>
+        </div>
+      </a>
     </div>
 
   </div>
 
-  <footer>
-    Built by you • hosted on GitHub Pages
-  </footer>
+
+  <!-- 🔥 PROJECT 2 (ONLY LEFT) -->
+  <div class="project-row single">
+
+    <div class="project-panel">
+      <h2 class="project-title">Project Two</h2>
+      <p class="project-desc">Standalone animation experiment.</p>
+
+      <a class="card" href="#">
+        <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif">
+        <div class="card-content">
+          <h3 class="card-title">Solo Demo</h3>
+          <p class="card-desc">Single-card project layout.</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+
+  <!-- 🔥 PROJECT 3 (ONLY RIGHT aligned feel via empty left spacer) -->
+  <div class="project-row">
+
+    <div class="project-panel"></div>
+
+    <div class="project-panel">
+      <h2 class="project-title">Project Three</h2>
+      <p class="project-desc">Right-aligned showcase.</p>
+
+      <a class="card" href="#">
+        <img src="highlighter.gif">
+        <div class="card-content">
+          <h3 class="card-title">Right Only</h3>
+          <p class="card-desc">Experiment on one side.</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  Built by you • hosted on GitHub Pages
+</footer>
 
 </body>
 </html>
