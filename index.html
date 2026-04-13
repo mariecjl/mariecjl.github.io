@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>My Projects</title>
+<title>tiny projects by marie</title>
 
 <style>
   body {
@@ -11,6 +11,7 @@
     font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     background: #0f1115;
     color: #e6e6e6;
+    line-height: 1.5;
   }
 
   header {
@@ -21,10 +22,12 @@
   header h1 {
     font-size: 2.5rem;
     margin: 0;
+    font-weight: 700;
   }
 
   header p {
     color: #a0a0a0;
+    margin-top: 8px;
   }
 
   .container {
@@ -33,13 +36,13 @@
     padding: 20px;
   }
 
-  /* 🔥 ROW SYSTEM */
+  /* ROW SYSTEM */
   .project-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin-bottom: 60px;
-    align-items: stretch; /* Ensures panels are same height */
+    gap: 40px;
+    margin-bottom: 80px;
+    align-items: start; /* Keeps cards at their natural heights */
   }
 
   .project-panel {
@@ -47,12 +50,8 @@
     flex-direction: column;
   }
 
-  /* This keeps the text area consistent so cards stay aligned */
   .project-header {
-    min-height: 100px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    margin-bottom: 20px;
   }
 
   .project-title {
@@ -63,10 +62,11 @@
   .project-desc {
     color: #a0a0a0;
     font-size: 0.95rem;
-    margin: 0 0 16px 0;
-    line-height: 1.4;
+    margin: 0;
+    max-width: 400px;
   }
 
+  /* CARD STYLING */
   .card {
     background: #161a22;
     border-radius: 14px;
@@ -75,9 +75,11 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-decoration: none;
     color: inherit;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Stretch card to fill panel */
+    
+    /* Shrink card to the size of the GIF */
+    width: max-content;
+    max-width: 100%; 
+    display: block;
   }
 
   .card:hover {
@@ -86,20 +88,19 @@
   }
 
   .card img {
-    width: 100%;
-    aspect-ratio: 16 / 10; /* Keeps images consistent size */
-    object-fit: cover;
+    /* Natural size logic */
+    width: auto;
+    height: auto;
+    max-width: 100%;
     display: block;
-    background: #1c212a;
   }
 
   .card-content {
     padding: 16px;
-    flex-grow: 1; /* Makes content fill the bottom */
   }
 
   .card-title {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     font-size: 1rem;
     font-weight: 600;
   }
@@ -108,21 +109,25 @@
     margin: 0;
     font-size: 0.85rem;
     color: #a0a0a0;
-    line-height: 1.5;
+    line-height: 1.4;
   }
 
   footer {
     text-align: center;
-    padding: 60px;
+    padding: 80px 20px;
     color: #666;
+    font-size: 0.9rem;
   }
 
+  /* Responsive layout for mobile */
   @media (max-width: 800px) {
     .project-row {
       grid-template-columns: 1fr;
+      gap: 50px;
     }
-    .project-header {
-      min-height: auto;
+    
+    .card {
+        width: 100%; /* On mobile, let it fill width for readability */
     }
   }
 </style>
@@ -138,6 +143,7 @@
 <div class="container">
 
   <div class="project-row">
+
     <div class="project-panel">
       <div class="project-header">
         <h2 class="project-title">read any doc, any topic</h2>
@@ -145,17 +151,19 @@
       </div>
 
       <a class="card" href="#">
-        <img src="highlighter2.gif" alt="PDF interface">
+        <img src="highlighter2.gif" alt="PDF reading interface">
         <div class="card-content">
           <h3 class="card-title">upload a pdf & understand every detail</h3>
-          <p class="card-desc">just highlight whatever you don't understand for an explanation or example. save the explanation to your notes so you remember!</p>
+          <p class="card-desc">just highlight whatever you don't understand for an explanation or example.</p>
         </div>
       </a>
     </div>
 
     <div class="project-panel">
-      <div class="project-header">
-        </div>
+      <div class="project-header" style="visibility: hidden;">
+        <h2 class="project-title">spacer</h2>
+        <p class="project-desc">spacer</p>
+      </div>
 
       <a class="card" href="#">
         <img src="highlighter1.gif" alt="Note taking interface">
@@ -165,12 +173,29 @@
         </div>
       </a>
     </div>
-  </div>
 
   </div>
+
+  <div class="project-row">
+    <div class="project-panel">
+      <div class="project-header">
+        <h2 class="project-title">another experiment</h2>
+        <p class="project-desc">brief description of the next cool thing you built.</p>
+      </div>
+      <a class="card" href="#">
+        <img src="highlighter.gif" alt="Project detail">
+        <div class="card-content">
+          <h3 class="card-title">feature showcase</h3>
+          <p class="card-desc">a short sentence describing this specific view.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
 
 <footer>
-  Built by you • hosted on GitHub Pages
+  built by marie • 2026
 </footer>
 
 </body>
