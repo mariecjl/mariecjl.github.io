@@ -37,14 +37,9 @@
   .project-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 40px;
-    align-items: start;
-  }
-
-  /* single item row spans full width */
-  .project-row.single .project-panel {
-    grid-column: span 2;
+    gap: 32px;
+    margin-bottom: 60px;
+    align-items: stretch; /* Ensures panels are same height */
   }
 
   .project-panel {
@@ -52,15 +47,24 @@
     flex-direction: column;
   }
 
+  /* This keeps the text area consistent so cards stay aligned */
+  .project-header {
+    min-height: 100px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
   .project-title {
     font-size: 1.5rem;
-    margin-bottom: 6px;
+    margin: 0 0 8px 0;
   }
 
   .project-desc {
     color: #a0a0a0;
-    font-size: 0.9rem;
-    margin-bottom: 14px;
+    font-size: 0.95rem;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
   }
 
   .card {
@@ -71,6 +75,9 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-decoration: none;
     color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Stretch card to fill panel */
   }
 
   .card:hover {
@@ -80,23 +87,28 @@
 
   .card img {
     width: 100%;
-    height: auto; /* original GIF size */
+    aspect-ratio: 16 / 10; /* Keeps images consistent size */
+    object-fit: cover;
     display: block;
+    background: #1c212a;
   }
 
   .card-content {
-    padding: 12px 14px;
+    padding: 16px;
+    flex-grow: 1; /* Makes content fill the bottom */
   }
 
   .card-title {
-    margin: 0 0 6px;
-    font-size: 0.95rem;
+    margin: 0 0 8px;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .card-desc {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #a0a0a0;
+    line-height: 1.5;
   }
 
   footer {
@@ -109,8 +121,8 @@
     .project-row {
       grid-template-columns: 1fr;
     }
-    .project-row.single .project-panel {
-      grid-column: span 1;
+    .project-header {
+      min-height: auto;
     }
   }
 </style>
@@ -126,13 +138,14 @@
 <div class="container">
 
   <div class="project-row">
-
     <div class="project-panel">
-      <h2 class="project-title">read any doc, any topic </h2>
-      <p class="project-desc">upload documents, take notes, query for explanations & examples, and tailor to your knowledge level</p>
+      <div class="project-header">
+        <h2 class="project-title">read any doc, any topic</h2>
+        <p class="project-desc">upload documents, take notes, query for explanations & examples, and tailor to your knowledge level</p>
+      </div>
 
       <a class="card" href="#">
-        <img src="highlighter2.gif">
+        <img src="highlighter2.gif" alt="PDF interface">
         <div class="card-content">
           <h3 class="card-title">upload a pdf & understand every detail</h3>
           <p class="card-desc">just highlight whatever you don't understand for an explanation or example. save the explanation to your notes so you remember!</p>
@@ -141,73 +154,20 @@
     </div>
 
     <div class="project-panel">
-      <h2 class="project-title"> </h2>
-      <p class="project-desc"> </p>
-      <p class="project-desc"> </p>
+      <div class="project-header">
+        </div>
 
       <a class="card" href="#">
-        <img src="highlighter1.gif">
+        <img src="highlighter1.gif" alt="Note taking interface">
         <div class="card-content">
           <h3 class="card-title">take notes & query any confusions</h3>
           <p class="card-desc">understand every concept as you write -- tailor level of expertise as you wish!</p>
         </div>
       </a>
     </div>
-
   </div>
 
-
-  <div class="project-row">
-
-    <div class="project-panel">
-      <h2 class="project-title">Project One</h2>
-      <p class="project-desc">Two-part animation system demo.</p>
-
-      <a class="card" href="#">
-        <img src="highlighter2.gif">
-        <div class="card-content">
-          <h3 class="card-title">Left Interaction</h3>
-          <p class="card-desc">Hover physics system.</p>
-        </div>
-      </a>
-    </div>
-
-    <div class="project-panel">
-      <h2 class="project-title">Project One (continued)</h2>
-      <p class="project-desc">Same project, second view.</p>
-
-      <a class="card" href="#">
-        <img src="highlighter1.gif">
-        <div class="card-content">
-          <h3 class="card-title">Right Interaction</h3>
-          <p class="card-desc">State transitions.</p>
-        </div>
-      </a>
-    </div>
-
   </div>
-
-  <!-- 🔥 PROJECT 3 (ONLY RIGHT aligned feel via empty left spacer) -->
-  <div class="project-row">
-
-    <div class="project-panel"></div>
-
-    <div class="project-panel">
-      <h2 class="project-title">Project Three</h2>
-      <p class="project-desc">Right-aligned showcase.</p>
-
-      <a class="card" href="#">
-        <img src="highlighter.gif">
-        <div class="card-content">
-          <h3 class="card-title">Right Only</h3>
-          <p class="card-desc">Experiment on one side.</p>
-        </div>
-      </a>
-    </div>
-
-  </div>
-
-</div>
 
 <footer>
   Built by you • hosted on GitHub Pages
