@@ -36,6 +36,21 @@
       padding: 20px;
     }
 
+    .project {
+      margin-bottom: 60px;
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      color: #a0a0a0;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -67,12 +82,12 @@
     }
 
     .card-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin: 0 0 6px;
     }
 
     .card-desc {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #a0a0a0;
       margin: 0;
     }
@@ -99,42 +114,63 @@
   </header>
 
   <div class="container">
-    <div class="grid">
 
-      <!-- CARD -->
-      <a class="card" href="#">
-        <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" alt="project gif">
-        <div class="card-content">
-          <h3 class="card-title">Project One</h3>
-          <p class="card-desc">A cool animation system I built.</p>
-        </div>
-      </a>
+    <!-- PROJECT 1 -->
+    <div class="project">
+      <h2 class="project-title">Project One</h2>
+      <p class="project-desc">A cool animation system I built.</p>
 
-      <a class="card" href="#">
-        <img src="https://media.giphy.com/media/l0HlQ7LRalQqdWfao/giphy.gif" alt="project gif">
-        <div class="card-content">
-          <h3 class="card-title">Project Two</h3>
-          <p class="card-desc">Interactive UI concept with motion.</p>
-        </div>
-      </a>
+      <div class="grid">
+        <a class="card" href="#">
+          <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
+          <div class="card-content">
+            <h3 class="card-title">Interaction Demo</h3>
+            <p class="card-desc">Smooth motion + hover physics.</p>
+          </div>
+        </a>
 
-      <a class="card" href="#">
-        <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" alt="project gif">
-        <div class="card-content">
-          <h3 class="card-title">Project Three</h3>
-          <p class="card-desc">Experimental data visualization.</p>
-        </div>
-      </a>
+        <a class="card" href="#">
+          <img src="https://media.giphy.com/media/l0HlQ7LRalQqdWfao/giphy.gif">
+          <div class="card-content">
+            <h3 class="card-title">State Transitions</h3>
+            <p class="card-desc">Animated UI state changes.</p>
+          </div>
+        </a>
 
-      <a class="card" href="#">
-        <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" alt="project gif">
-        <div class="card-content">
-          <h3 class="card-title">Project Four</h3>
-          <p class="card-desc">A generative design study.</p>
-        </div>
-      </a>
-
+        <a class="card" href="#">
+          <img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif">
+          <div class="card-content">
+            <h3 class="card-title">Visual System</h3>
+            <p class="card-desc">Reusable animation patterns.</p>
+          </div>
+        </a>
+      </div>
     </div>
+
+    <!-- PROJECT 2 -->
+    <div class="project">
+      <h2 class="project-title">Project Two</h2>
+      <p class="project-desc">Interactive UI concept with motion.</p>
+
+      <div class="grid">
+        <a class="card" href="#">
+          <img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif">
+          <div class="card-content">
+            <h3 class="card-title">Concept Demo</h3>
+            <p class="card-desc">Exploring interaction ideas.</p>
+          </div>
+        </a>
+
+        <a class="card" href="#">
+          <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif">
+          <div class="card-content">
+            <h3 class="card-title">Motion Study</h3>
+            <p class="card-desc">Timing + easing experiments.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
   </div>
 
   <footer>
