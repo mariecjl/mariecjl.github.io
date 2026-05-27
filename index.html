@@ -589,8 +589,8 @@ document.querySelectorAll('.card').forEach(c=>{
       const big=Math.random()<0.04;
       S.push({
         x:Math.random()*W, y:Math.random()*H,
-        r: big ? Math.random()*1.4+0.9 : Math.random()*0.8+0.2,
-        ba: big ? Math.random()*0.5+0.5 : Math.random()*0.7+0.25,
+        r: big ? Math.random()*2.8+1.6 : Math.random()*1.4+0.5,
+        ba: big ? Math.random()*0.2+0.8 : Math.random()*0.4+0.55,
         /* twinkle: fast random offset so stars don't sync */
         sp: Math.random()*2.5+0.8,
         ph: Math.random()*Math.PI*2,
@@ -633,8 +633,8 @@ document.querySelectorAll('.card').forEach(c=>{
       ctx.fill();
 
       /* cross-flare on bright stars */
-      if(s.r>1.2 && a>0.55){
-        const fl=s.r*2.5*a;
+      if(s.r > 0.9 && a > 0.40){   // ← lower both thresholds
+        const fl = s.r * 3.2 * a;
         ctx.strokeStyle=`rgba(220,212,195,${(a*0.25).toFixed(3)})`;
         ctx.lineWidth=0.5;
         ctx.beginPath(); ctx.moveTo(s.x-fl,s.y); ctx.lineTo(s.x+fl,s.y); ctx.stroke();
