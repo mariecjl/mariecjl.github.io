@@ -282,8 +282,8 @@ const projects = [
     desc:'Drop in a single photo and step inside it — a depth model turns the flat image into a 3D surface you can look around.',
     tags:['cv','ml','3d'], pills:['transformers.js','three.js','depth'],
     notes:[
-      {src:'phototo3d1.gif', t:'drop in any photo to build a depth map', d:'a monocular depth model runs right in the browser'},
-      {src:'phototo3d2.gif', t:'drag to look around the diorama', d:'tune depth, trim stretched edges, or invert in real time'}
+      {src:'3d2.gif', t:'drop in any photo to build a depth map', d:'a monocular depth model runs right in the browser'},
+      {src:'3d1.gif', t:'drag to look around the diorama', d:'tune depth, trim stretched edges, or invert in real time'}
     ],
     detail:`<div class="pill-row"><span>transformers.js</span><span>depth anything v2</span><span>three.js</span><span>webgpu</span><span>javascript</span></div>
       <h3>overview</h3><p>A browser-based tool that turns any single photo into a 3D scene you can look around. It runs a monocular depth-estimation model (Depth Anything V2) entirely on-device through transformers.js, converts the resulting depth map into a displaced 3D surface, and renders it with Three.js — so a flat image becomes a small diorama you can orbit and explore.</p>
