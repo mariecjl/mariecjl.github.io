@@ -226,8 +226,8 @@
 
     <section class="hero">
       <div class="eyebrow">a commonplace book · refilled most weekends</div>
-      <h1><span class="cap"></span> marie's tiny projects</h1>
-      <p>Every small thing I build gets a page here — dated, glued in, never thrown out. Open one and you're not reading about it, <i>you're standing inside it</i>.</p>
+      <h1><span class="cap"</span> marie's tiny notebook</h1>
+      <p>just for fun!! <i></i>.</p>
     </section>
 
     <div class="section-label">table of contents</div>
@@ -278,7 +278,30 @@
 =================================================================== */
 const projects = [
   {
-    entry:'01', cat:'3d & physics', title:'fingertip polyhedrons',
+    entry:'01', cat:'ml & cv · 3d', title:'photo → 3d scene',
+    desc:'Drop in a single photo and step inside it — a depth model turns the flat image into a 3D surface you can look around.',
+    tags:['cv','ml','3d'], pills:['transformers.js','three.js','depth'],
+    notes:[
+      {src:'phototo3d1.gif', t:'drop in any photo to build a depth map', d:'a monocular depth model runs right in the browser'},
+      {src:'phototo3d2.gif', t:'drag to look around the diorama', d:'tune depth, trim stretched edges, or invert in real time'}
+    ],
+    detail:`<div class="pill-row"><span>transformers.js</span><span>depth anything v2</span><span>three.js</span><span>webgpu</span><span>javascript</span></div>
+      <h3>overview</h3><p>A browser-based tool that turns any single photo into a 3D scene you can look around. It runs a monocular depth-estimation model (Depth Anything V2) entirely on-device through transformers.js, converts the resulting depth map into a displaced 3D surface, and renders it with Three.js — so a flat image becomes a small diorama you can orbit and explore.</p>
+      <h3>how it works</h3><ul><li>Estimates a per-pixel depth map from a single image — no second camera needed</li><li>Displaces a fine mesh by depth so nearer regions bulge toward the camera</li><li>Trims triangles that bridge large depth gaps to remove "rubber-sheet" stretching</li><li>Constrains the orbit so you look around the diorama without seeing its flat edges</li></ul>
+      <h3>features</h3><ul><li>Runs fully in the browser — drag-and-drop a photo, no upload or server</li><li>WebGPU acceleration when available, with a WASM CPU fallback</li><li>Live controls for depth amount, edge cutoff, edge trimming, and inverted depth</li><li>Drag to orbit, scroll to zoom, and reset the view at any time</li></ul>`
+  },
+  {
+    entry:'02', cat:'data viz · tool', title:'wander — a map of the rabbit hole',
+    desc:'Drop in on one Wikipedia article and watch everything it touches bloom outward into a living constellation.',
+    tags:['tool'], pills:['wikipedia','live data','graph'],
+    notes:[ {src:'wander.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>wikipedia api</span><span>force graph</span><span>canvas</span><span>javascript</span></div>
+      <h3>overview</h3><p>An interactive knowledge-graph explorer built entirely on live Wikipedia data. Begin from any single article and watch its connections bloom outward into a force-directed constellation of everything it links to — then double-click any star to bloom deeper and follow your curiosity one hop at a time. Every node, link, and summary is pulled in real time from Wikipedia's REST and query APIs as you explore.</p>
+      <h3>features</h3><ul><li>Seed the map from any article — type a topic or pick a suggested starting point</li><li>Force-directed layout that grows organically as new nodes are fetched</li><li>Double-click a star to expand it, or toggle auto-bloom to let the graph grow on its own</li><li>Live article previews — title, summary, and thumbnail drawn from the Wikipedia REST API</li><li>Drag to pan, scroll to zoom, and recenter the view at any time</li><li>Running tally of articles, links, and exploration depth</li><li>Jump straight to any article on Wikipedia from its detail card</li></ul>
+      <h3>data source</h3><ul><li>Article summaries and thumbnails via the Wikipedia REST v1 API</li><li>Outbound links via the MediaWiki query API</li><li>No backend — everything is fetched and rendered client-side as you wander</li></ul>`
+  },
+  {
+    entry:'03', cat:'3d & physics', title:'fingertip polyhedrons',
     desc:'Renders arbitrary vertices into interactive polyhedron models with physics-based inertia & rotation.',
     tags:['3d'], pills:['three.js','physics','webgl'], wip:true,
     notes:[
@@ -289,7 +312,7 @@ const projects = [
       <div class="wip-note"><div class="ic">&#10022;</div><strong>in progress</strong><p>detailed description to come shortly.</p></div>`
   },
   {
-    entry:'02', cat:'cv', title:'object approach detector',
+    entry:'04', cat:'cv', title:'object approach detector',
     desc:'Real-time approach detection using torchvision\u2019s midas module for depth estimation.',
     tags:['cv','ml'], pills:['pytorch','midas','depth'],
     notes:[ {src:'approach.gif', t:'', d:''} ],
@@ -299,7 +322,7 @@ const projects = [
       <h3>file structure</h3><ul><li><code>main.py</code> — main application loop</li><li><code>midas_utils.py</code> — loading MiDaS model + depth inference</li><li><code>detection.py</code> — approach detection logic</li><li><code>config.py</code> — parameters and thresholds list</li><li><code>depthdisplay.py</code> — side-by-side comparison of camera stream and MiDaS depth inference</li></ul>`
   },
   {
-    entry:'03', cat:'astrophysics', title:'tabby star forecaster',
+    entry:'05', cat:'astrophysics', title:'tabby star forecaster',
     desc:'Predicting flux variations of Tabby\u2019s Star using lag-based features and stochastic forecasting.',
     tags:['astro','ml'], pills:['sklearn','time-series','stochastic'],
     notes:[ {src:'tabby.gif', t:'', d:''} ],
@@ -310,7 +333,7 @@ const projects = [
       <h3>forecast</h3><ul><li>Recursive loop predicting next flux using the regressor</li><li>Stochastic noise added proportional to observed volatility to simulate Tabby's Star's irregularity</li><li>Sliding prediction window forwarded and repeated for a specified number of steps into the future</li></ul>`
   },
   {
-    entry:'04', cat:'tool', title:'read any doc, any topic',
+    entry:'06', cat:'tool', title:'read any doc, any topic',
     desc:'Upload documents, take notes, query for explanations & examples, and tailor depth to your knowledge level.',
     tags:['tool','ml'], pills:['llm','pdf','rag'], wip:true,
     notes:[
@@ -321,7 +344,7 @@ const projects = [
       <div class="wip-note"><div class="ic">&#10022;</div><strong>in progress</strong><p>detailed description to come shortly.</p></div>`
   },
   {
-    entry:'05', cat:'astrophysics · simulation', title:'n-body gravitational simulation',
+    entry:'07', cat:'astrophysics · simulation', title:'n-body gravitational simulation',
     desc:'Many-body gravity solver — predicting near-earth asteroid 2011 UL21.',
     tags:['astro','3d'], pills:['numpy','gravity','simulation'], wip:true,
     notes:[
@@ -332,7 +355,20 @@ const projects = [
       <div class="wip-note"><div class="ic">&#10022;</div><strong>in progress</strong><p>detailed description to come shortly.</p></div>`
   },
   {
-    entry:'06', cat:'cv · tool', title:'draw the world',
+    entry:'08', cat:'simulation', title:'civsim — band to state',
+    desc:'An agent-based civilization simulator where bands of individuals are born, pair, learn, and build their way from the Paleolithic onward.',
+    tags:['ml'], pills:['agent-based','simulation','javascript'],
+    notes:[
+      {src:'civsim1.gif', t:'watch a society grow from a single band', d:'agents are born, pair, learn, and build across the eras'},
+      {src:'civsim2.gif', t:'click any agent to inspect their life', d:'vitals, personality, kinship, and life events'}
+    ],
+    detail:`<div class="pill-row"><span>agent-based modeling</span><span>simulation</span><span>canvas</span><span>javascript</span></div>
+      <h3>overview</h3><p>An agent-based civilization simulator that grows a society from a single band of hunter-gatherers up through the Paleolithic, Neolithic, Chalcolithic, Bronze, and Classical eras. Each agent lives an individual life — forming relationships, raising children, learning and teaching skills, founding groups, and eventually dying — and the civilization that emerges is the sum of thousands of these small decisions playing out over generations.</p>
+      <h3>simulation</h3><ul><li>Individually simulated agents with age, sex, personality, vitals, and kinship</li><li>Relationships, romantic pairing, births, and multi-generational family trees</li><li>Knowledge that spreads by teaching — and is lost when those who hold it die</li><li>Groups that grow, fission into new bands, absorb captives, and go to war</li><li>Emergent roles — leaders and succession, healers, shamans, and priests</li><li>A tech tree of discoveries that unlocks structures, crops, and livestock across eras</li></ul>
+      <h3>features</h3><ul><li>Click any agent on the map to inspect their vitals, personality, kinship, and life events</li><li>Live panels for population history, discoveries, society, and group relations</li><li>A narrative chronicle that writes the story of the civilization as it unfolds — births, deaths, conflicts, trade, and environmental events</li><li>World statistics tracking years survived, births, deaths, wars, discoveries, and peak population</li></ul>`
+  },
+  {
+    entry:'09', cat:'cv · tool', title:'draw the world',
     desc:'Turn your hand into a brush — a gesture-controlled virtual drawing app.',
     tags:['cv','tool'], pills:['cv','canvas','gesture'],
     notes:[ {src:'drawtheworld.gif', t:'', d:''} ],
