@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A small notebook of things I've built — open one and step inside.">
+<title>Marie's Notebook — tiny projects</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='78' font-size='86'%3E%E2%9C%8E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f2ec; --paper-deep:#e6e3da; --card:#faf9f5;
+    --ink:#2a2a2a; --ink-soft:#6a6a66;
+    --rule:#d8d6cf; --margin:#8a8580; --marigold:#7a7468; --graphite:#9a958c;
+    --hair:rgba(42,42,42,0.12);
+    --note:#eceae3; --note-deep:#dedbd2; --note2:#e4e2da; --note2-deep:#d4d1c8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{min-height:100%}
+  body{
+    min-height:100vh;color:var(--ink);
+    font-family:'Tinos','Times New Roman',Times,serif;
+    background:radial-gradient(ellipse 90% 60% at 50% -8%,#e9e7e0 0%,#dcdad2 52%,#cbc9c0 100%);
+    background-attachment:fixed;
+  }
+
+  /* ---- the page itself ---- */
+  .page{
+    position:relative;max-width:1180px;margin:46px auto 64px;
+    background:var(--paper);overflow:hidden;
+    box-shadow:0 36px 90px rgba(20,14,4,0.38), 0 1px 0 rgba(255,255,255,0.4) inset;
+  }
+  .page::before{ /* paper grain + ruled lines + red margin rule */
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.92;
+    background-image:
+      radial-gradient(rgba(43,53,80,0.05) 1px, transparent 1.3px),
+      repeating-linear-gradient(to bottom, transparent 0 33px, var(--rule) 33px 34px),
+      linear-gradient(to right, transparent 0 87px, var(--margin) 87px 88.6px, transparent 88.6px 100%);
+    background-size:3.2px 3.2px, auto, auto;
+  }
+  .spine{ /* spiral-bound punch holes */
+    position:absolute;left:0;top:0;bottom:0;width:54px;z-index:1;
+    background-color:var(--paper-deep);
+    background-image:radial-gradient(circle 6px at 27px 30px, var(--paper) 96%, transparent 100%);
+    background-size:54px 58px;background-repeat:repeat-y;
+    box-shadow:inset -10px 0 16px -6px rgba(20,14,4,0.28), 1px 0 0 rgba(20,14,4,0.12);
+  }
+  .content{position:relative;z-index:2;padding:0 42px 56px 118px}
+
+  /* ---- topbar ---- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    padding:30px 0 22px;font-family:'Courier Prime',monospace}
+  .topbar .mark{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .topbar .mark b{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);font-weight:700}
+  .topbar .mark span{font-family:'Tinos','Times New Roman',Times,serif;font-size:15px;font-style:italic;color:var(--ink-soft)}
+  .topbar .clock{font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;display:flex;align-items:center;gap:8px}
+  .topbar .dot{width:6px;height:6px;border-radius:50%;background:var(--margin);box-shadow:0 0 6px var(--margin);
+    animation:blink 2.6s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* ---- hero ---- */
+  .hero{padding:54px 0 44px;max-width:680px}
+  .eyebrow{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--margin);opacity:.85;margin-bottom:24px}
+  /* scribbly handwriting for the title (swapped in from the cursive original) */
+  .hero h1{font-family:'Tinos','Times New Roman',Times,serif;font-weight:700;letter-spacing:-0.01em;
+    font-size:clamp(34px,6.4vw,64px);line-height:1.12;color:var(--ink);margin-bottom:22px}
+  .hero h1 .cap{color:var(--margin)}
+  .hero p{font-family:'Tinos','Times New Roman',Times,serif;font-weight:500;font-size:clamp(17px,2vw,20px);color:var(--ink-soft);line-height:1.5}
+  .hero p i{color:var(--ink);font-style:italic;font-weight:600}
+
+  /* ---- section label ---- */
+  .section-label{display:flex;align-items:center;gap:14px;margin:6px 0 22px;
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft)}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--hair)}
+
+  /* ---- filter bar ---- */
+  .filter{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:0 0 34px}
+  .filter .fl{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
+  .fb{font-family:'Tinos','Times New Roman',Times,serif;font-weight:600;font-size:16px;color:var(--ink-soft);
+    background:rgba(191,131,28,.06);border:1px dashed var(--hair);border-radius:6px;padding:3px 13px;cursor:pointer;
+    transition:all .2s ease}
+  .fb:hover{border-color:var(--margin);color:var(--margin)}
+  .fb.on{background:var(--margin);border:1px solid var(--margin);color:#fbf6e9}
+
+  /* ---- catalog grid ---- */
+  .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:40px 30px;padding-bottom:8px;align-items:start}
+  /* a two-gif page spans two columns and sits wider, like a sticky note unfolded */
+  .card.wide{grid-column:span 2}
+
+  .card{position:relative;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--hair);border-top:3px dashed rgba(43,53,80,.22);
+    box-shadow:0 14px 30px rgba(35,26,10,.16);
+    transform:rotate(var(--tilt,0deg));
+    transition:transform .25s ease, box-shadow .25s ease, opacity .3s ease;cursor:pointer}
+  .card:hover{transform:rotate(0deg) translateY(-6px);box-shadow:0 22px 46px rgba(35,26,10,.26)}
+  .card:focus-visible{outline:2px solid var(--margin);outline-offset:3px}
+  .card.gone{display:none}
+
+  .card-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 0;
+    font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+  .card-top .cat{color:var(--ink-soft)}
+
+  .stamp{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.08em;padding:4px 11px;
+    border-radius:50%;position:relative;display:inline-block;transform:rotate(-7deg)}
+  .stamp.penned{color:var(--margin);border:1.5px solid var(--margin)}
+  .stamp.penned::after{content:'';position:absolute;inset:2.5px;border:1px solid var(--margin);border-radius:inherit;opacity:.55}
+  .stamp.wip{color:var(--graphite);border:1.5px dashed var(--graphite);opacity:.85}
+
+  /* ---- sticky-note gif area ---- */
+  .notes{display:flex;gap:14px;padding:14px 16px 4px}
+  .notes.two{flex-wrap:wrap}
+  .note{flex:1;min-width:0;position:relative;
+    background:var(--note);
+    box-shadow:0 8px 16px rgba(35,26,10,.2);
+    transform:rotate(var(--ntilt,-1.4deg));
+    padding:9px 9px 11px}
+  .note:nth-child(2){background:var(--note2);box-shadow:0 8px 16px rgba(10,35,18,.18)}
+  .note::before{ /* little piece of tape */
+    content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-2deg);
+    width:46px;height:16px;background:rgba(255,255,255,.45);
+    border:1px solid rgba(43,53,80,.1);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .note .shot{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;
+    background:rgba(255,255,255,.4);
+    filter:grayscale(.4) saturate(.7) brightness(.96);
+    transition:filter .5s ease}
+  .card:hover .note .shot{filter:saturate(1) brightness(1)}
+  .note .cap-t{font-family:'Tinos','Times New Roman',Times,serif;font-weight:600;font-size:15px;color:var(--ink);line-height:1.2;margin-top:7px}
+  .note .cap-d{font-family:'Tinos','Times New Roman',Times,serif;font-weight:500;font-size:13px;color:var(--ink-soft);line-height:1.3;margin-top:1px}
+
+  .card-body{padding:10px 18px 14px;flex:1;display:flex;flex-direction:column}
+  .card-body h3{font-family:'Tinos','Times New Roman',Times,serif;font-weight:700;font-size:clamp(16px,2.4vw,20px);line-height:1.25;margin-bottom:8px;color:var(--ink)}
+  .card-body .desc{font-family:'Tinos','Times New Roman',Times,serif;font-weight:500;font-size:16px;color:var(--ink-soft);line-height:1.4;flex:1}
+
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+  .tags span{font-family:'Tinos','Times New Roman',Times,serif;font-weight:600;font-size:13px;color:var(--ink-soft);
+    background:rgba(191,131,28,.08);border:1px dashed var(--hair);border-radius:5px;padding:3px 9px}
+
+  .card-cta{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;
+    border-top:1px dashed var(--hair);font-family:'Tinos','Times New Roman',Times,serif;font-weight:600;font-size:15.5px;color:var(--ink)}
+  .card-cta.soon{color:var(--graphite);font-style:italic}
+  .card-cta .arrow{transition:transform .2s}
+  .card:hover .card-cta .arrow{transform:translateX(4px)}
+
+  /* ---- footer ---- */
+  .foot{border-top:1px dashed var(--hair);padding:26px 0 8px;display:flex;flex-wrap:wrap;
+    gap:14px;align-items:center;justify-content:space-between;
+    font-family:'Tinos','Times New Roman',Times,serif;font-weight:500;font-size:16px;color:var(--ink-soft)}
+  .foot a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--ink-soft)}
+  .foot a:hover{color:var(--margin);border-bottom-color:var(--margin)}
+  .foot .links{display:flex;gap:18px}
+
+  /* ---- modal (the "open the page and step inside" view) ---- */
+  .backdrop{position:fixed;inset:0;z-index:8000;background:rgba(20,14,4,.55);
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    opacity:0;pointer-events:none;transition:opacity .3s ease}
+  .backdrop.open{opacity:1;pointer-events:auto}
+  .sheet{background:var(--paper);max-width:680px;width:100%;max-height:86vh;overflow:hidden;
+    position:relative;border-top:4px dashed rgba(43,53,80,.22);
+    box-shadow:0 40px 100px rgba(20,14,4,.5);
+    transform:translateY(24px) rotate(-.4deg) scale(.98);transition:transform .35s ease}
+  .backdrop.open .sheet{transform:translateY(0) rotate(0) scale(1)}
+  .sheet::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.85;
+    background-image:repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px)}
+  .sheet-bar{position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;
+    padding:22px 26px 16px;border-bottom:1px dashed var(--hair)}
+  .sheet-bar .stag{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--margin);margin-bottom:6px}
+  .sheet-bar .stitle{font-family:'Tinos','Times New Roman',Times,serif;font-weight:700;font-size:clamp(18px,3.2vw,24px);line-height:1.3;color:var(--ink)}
+  .x{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px dashed var(--graphite);background:transparent;
+    color:var(--ink-soft);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+  .x:hover{border-color:var(--margin);color:var(--margin)}
+  .sheet-body{position:relative;z-index:2;overflow-y:auto;padding:24px 28px 32px;max-height:calc(86vh - 92px)}
+  .sheet-body h3{font-family:'Tinos','Times New Roman',Times,serif;font-weight:700;font-style:italic;font-size:16px;color:var(--ink);margin:22px 0 10px}
+  .sheet-body h3:first-child{margin-top:0}
+  .sheet-body p{font-family:'Tinos','Times New Roman',Times,serif;font-weight:400;font-size:16px;line-height:1.6;color:var(--ink);margin-bottom:12px}
+  .sheet-body ul{list-style:none;margin:0 0 14px}
+  .sheet-body li{font-family:'Tinos','Times New Roman',Times,serif;font-weight:400;font-size:15px;line-height:1.5;color:var(--ink);
+    padding:5px 0 5px 22px;border-bottom:1px dashed var(--hair);position:relative}
+  .sheet-body li::before{content:'\2192';position:absolute;left:0;color:var(--margin);opacity:.7}
+  .sheet-body li:last-child{border-bottom:none}
+  .sheet-body code{font-family:'Courier Prime',monospace;font-size:13px;background:rgba(191,131,28,.12);
+    border:1px solid var(--hair);padding:1px 6px;border-radius:4px;color:var(--ink)}
+  .pill-row{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 20px}
+  .pill-row span{font-family:'Tinos','Times New Roman',Times,serif;font-weight:600;font-size:14px;color:var(--ink-soft);
+    background:rgba(191,131,28,.08);border:1px dashed var(--hair);border-radius:5px;padding:3px 10px}
+  .wip-note{text-align:center;padding:40px 0 30px}
+  .wip-note .ic{font-size:30px;color:var(--marigold);opacity:.5}
+  .wip-note strong{display:block;font-family:'Tinos','Times New Roman',Times,serif;font-weight:700;font-style:italic;font-size:18px;color:var(--ink);margin:14px 0 6px}
+  .wip-note p{font-family:'Tinos','Times New Roman',Times,serif;font-size:17px;color:var(--ink-soft)}
+
+  @media (max-width:760px){
+    .spine{display:none}
+    .content{padding:0 22px 46px 32px}
+    .page::before{
+      background-image:
+        radial-gradient(rgba(43,53,80,0.05) 1px, transparent 1.3px),
+        repeating-linear-gradient(to bottom, transparent 0 33px, var(--rule) 33px 34px),
+        linear-gradient(to right, transparent 0 16px, var(--margin) 16px 17.6px, transparent 17.6px 100%);
+      background-size:3.2px 3.2px, auto, auto;
+    }
+    .catalog{grid-template-columns:1fr}
+    .card.wide{grid-column:span 1}
+    .notes.two{flex-direction:column}
+    .foot{flex-direction:column;align-items:flex-start}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .card,.sheet,.backdrop{transition:none}
+    .dot{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="spine" aria-hidden="true"></div>
+
+  <div class="content">
+
+    <div class="topbar">
+      <div class="mark"><b>Commonplace</b><span>· a notebook of small things</span></div>
+      <div class="clock"><span class="dot"></span><span id="clock">ink's still wet · --:--:--</span></div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">a commonplace book · refilled most weekends</div>
+      <h1><span class="cap">Marie's</span> Notebook</h1>
+      <p>Every small thing I build gets a page here — dated, glued in, never thrown out. Open one and you're not reading about it, <i>you're standing inside it</i>.</p>
+    </section>
+
+    <div class="section-label">table of contents</div>
+
+    <div class="filter" id="filter">
+      <span class="fl">filter /</span>
+      <button class="fb on" data-f="all">all</button>
+      <button class="fb" data-f="3d">3d &amp; physics</button>
+      <button class="fb" data-f="ml">ml</button>
+      <button class="fb" data-f="cv">cv</button>
+      <button class="fb" data-f="astro">astrophysics</button>
+      <button class="fb" data-f="tool">tools</button>
+    </div>
+
+    <div class="catalog" id="catalog"></div>
+
+    <div class="foot">
+      <span>filled in one page at a time</span>
+      <div class="links">
+        <a href="https://github.com/mariecjl" target="_blank" rel="noopener">more on github</a>
+        <a href="mailto:you@example.com">say hello</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- the page you step inside -->
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true">
+  <div class="sheet">
+    <div class="sheet-bar">
+      <div>
+        <div class="stag" id="sheet-tag"></div>
+        <div class="stitle" id="sheet-title"></div>
+      </div>
+      <button class="x" id="sheet-x" aria-label="Close">&#x2715;</button>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<script>
+/* ===================================================================
+   ENTRIES — each is a page in the notebook.
+   tags: space-separated, drive the filter (all / 3d / ml / cv / astro / tool)
+   notes: 1 or 2 sticky-note gifs. Two notes => the page renders WIDE.
+   detail: the long write-up shown when you open the page (step inside).
+=================================================================== */
+const projects = [
+  {
+    entry:'01', cat:'3d & physics', title:'fingertip polyhedrons',
+    desc:'Renders arbitrary vertices into interactive polyhedron models with physics-based inertia & rotation.',
+    tags:['3d'], pills:['three.js','physics','webgl'], wip:true,
+    notes:[
+      {src:'polynewa.gif', t:'dot the vertices to render; move your hand to rotate', d:'see your polyhedron in 3d'},
+      {src:'polynew.gif',  t:'flick your wrist to spin; pinch to zoom', d:'physics-based inertia and mass'}
+    ],
+    detail:`<div class="pill-row"><span>three.js</span><span>webgl</span><span>physics</span><span>javascript</span></div>
+      <div class="wip-note"><div class="ic">&#10022;</div><strong>in progress</strong><p>detailed description to come shortly.</p></div>`
+  },
+  {
+    entry:'02', cat:'cv', title:'object approach detector',
+    desc:'Real-time approach detection using torchvision\u2019s midas module for depth estimation.',
+    tags:['cv','ml'], pills:['pytorch','midas','depth'],
+    notes:[ {src:'approach.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>pytorch</span><span>torchvision</span><span>midas</span><span>python</span><span>depth estimation</span></div>
+      <h3>about</h3><p>Real-time object approach detection through PyTorch's MiDaS monocular depth estimation and OpenCV (live video stream). Computes per-frame depth maps, smooths temporal noise, and detects approaching objects with spatial filtering and temporal confirmation.</p>
+      <h3>features</h3><ul><li>Real-time webcam stream processing with OpenCV</li><li>Monocular depth estimation using MiDaS small</li><li>Temporal depth smoothing to reduce noise</li><li>Adaptive thresholding using median absolute deviation</li><li>Spatial filtering with weighting on center</li><li>Temporal confirmation to reduce noise and false positives</li><li>Displays and follows approaching object in a red bounding box</li></ul>
+      <h3>file structure</h3><ul><li><code>main.py</code> — main application loop</li><li><code>midas_utils.py</code> — loading MiDaS model + depth inference</li><li><code>detection.py</code> — approach detection logic</li><li><code>config.py</code> — parameters and thresholds list</li><li><code>depthdisplay.py</code> — side-by-side comparison of camera stream and MiDaS depth inference</li></ul>`
+  },
+  {
+    entry:'03', cat:'astrophysics', title:'tabby star forecaster',
+    desc:'Predicting flux variations of Tabby\u2019s Star using lag-based features and stochastic forecasting.',
+    tags:['astro','ml'], pills:['sklearn','time-series','stochastic'],
+    notes:[ {src:'tabby.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>python</span><span>sklearn</span><span>pandas</span><span>time-series</span><span>stochastic</span></div>
+      <h3>overview</h3><p>Applies time-series modeling to flux data (light curve) from Tabby's Star (KIC 8462852), known for its unusual and irregular dimming behavior. The project transforms the raw time series into lag-based features and uses a Random Forest regressor to forecast short-term flux variations. In parallel, a classification model is trained to identify extreme flux dips under class imbalance. Future flux variations are generated through recursive forecasting with stochastic noise to simulate uncertainty propagation over time.</p>
+      <h3>data processing</h3><ul><li>Source: Tabby's Star light curve from NASA Exoplanet Archive (~65K datapoints)</li><li>Preprocessing: filtering, normalization, selection of ~5K continuous datapoints of flux variation</li><li>Raw time series transformed into a supervised learning dataset using lagged features (default: 10)</li></ul>
+      <h3>models</h3><ul><li>Random Forest regressor for flux forecasting (200 trees)</li><li>Random Forest classifier for extreme event detection — with handling of class imbalance to detect rare anomalies</li></ul>
+      <h3>forecast</h3><ul><li>Recursive loop predicting next flux using the regressor</li><li>Stochastic noise added proportional to observed volatility to simulate Tabby's Star's irregularity</li><li>Sliding prediction window forwarded and repeated for a specified number of steps into the future</li></ul>`
+  },
+  {
+    entry:'04', cat:'tool', title:'read any doc, any topic',
+    desc:'Upload documents, take notes, query for explanations & examples, and tailor depth to your knowledge level.',
+    tags:['tool','ml'], pills:['llm','pdf','rag'], wip:true,
+    notes:[
+      {src:'highlighter2.gif', t:'upload a pdf & understand every detail', d:'highlight whatever you don\u2019t understand for an instant explanation or example.'},
+      {src:'highlighter1.gif', t:'take notes & query any confusions', d:'understand every concept as you write — tailor level of expertise as you wish.'}
+    ],
+    detail:`<div class="pill-row"><span>llm</span><span>rag</span><span>pdf.js</span><span>javascript</span></div>
+      <div class="wip-note"><div class="ic">&#10022;</div><strong>in progress</strong><p>detailed description to come shortly.</p></div>`
+  },
+  {
+    entry:'05', cat:'astrophysics · simulation', title:'n-body gravitational simulation',
+    desc:'Many-body gravity solver — predicting near-earth asteroid 2011 UL21.',
+    tags:['astro','3d'], pills:['numpy','gravity','simulation'], wip:true,
+    notes:[
+      {src:'nbodyfast.gif', t:'simulating an ejection', d:'a common event (80+%) in the 300+ trials run'},
+      {src:'nbody.png',     t:'simulation snapshots', d:'snapshots of the orbital trajectories of a simulation'}
+    ],
+    detail:`<div class="pill-row"><span>numpy</span><span>python</span><span>scipy</span><span>simulation</span></div>
+      <div class="wip-note"><div class="ic">&#10022;</div><strong>in progress</strong><p>detailed description to come shortly.</p></div>`
+  },
+  {
+    entry:'06', cat:'cv · tool', title:'draw the world',
+    desc:'Turn your hand into a brush — a gesture-controlled virtual drawing app.',
+    tags:['cv','tool'], pills:['cv','canvas','gesture'],
+    notes:[ {src:'drawtheworld.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>opencv</span><span>mediapipe</span><span>numpy</span><span>python</span></div>
+      <h3>overview</h3><p>A gesture-controlled virtual drawing app using computer vision that lets you draw directly in your camera frame. Built primarily on OpenCV and MediaPipe Hands, the app recognizes hand landmarks and processes frames in real time — allowing you to draw, select colors, toggle the pen, clear the canvas, and take screenshots, all with hand gestures alone.</p>
+      <h3>requirements</h3><ul><li>Working webcam and a macOS system (currently requires macOS for webcam-specific functions)</li><li>Python libraries: OpenCV, MediaPipe, NumPy</li><li>Run via VSCode or any Python compiler</li></ul>
+      <h3>gestures</h3><ul><li><strong>Draw</strong> — trace index finger in the air to draw a line</li><li><strong>Color selection</strong> — touch index fingertip to thumb to pick the color under your fingertip</li><li><strong>Pen toggle</strong> — touch middle fingertip to thumb to turn pen on/off</li><li><strong>Screenshot</strong> — touch ring fingertip to thumb to save the current frame to the Screenshots folder</li><li><strong>Clear canvas</strong> — touch pinky fingertip to thumb to erase all drawn lines</li></ul>
+      <h3>usage</h3><p>On launch, a "Drawing" window appears (may take up to 10 seconds). Instructions are shown in green at the bottom of the frame, with a folder icon for screenshots in the top right corner. Press <code>Esc</code> to exit.</p>`
+  },
+];
+
+/* ---------- render the table of contents ---------- */
+const grid = document.getElementById('catalog');
+grid.innerHTML = projects.map((p,i)=>{
+  const tilt = (Math.random()*3.2-1.6).toFixed(2);
+  const wide = p.notes.length === 2 ? ' wide' : '';
+  const notesCls = p.notes.length === 2 ? 'notes two' : 'notes';
+  const notesHtml = p.notes.map(n=>{
+    const ntilt = (Math.random()*4-2).toFixed(2);
+    const cap = (n.t || n.d)
+      ? `<div class="cap-t">${n.t||''}</div>${n.d?`<div class="cap-d">${n.d}</div>`:''}`
+      : '';
+    return `<div class="note" style="--ntilt:${ntilt}deg">
+        <img class="shot" src="${n.src}" alt="${p.title} preview" loading="lazy">
+        ${cap}
+      </div>`;
+  }).join('');
+  const stamp = p.wip
+    ? `<span class="stamp wip">in&nbsp;ink</span>`
+    : `<span class="stamp penned">penned</span>`;
+  const cta = p.wip
+    ? `<div class="card-cta soon">more to come <span class="arrow">&hellip;</span></div>`
+    : `<div class="card-cta">turn the page <span class="arrow">&rarr;</span></div>`;
+
+  return `
+    <article class="card${wide}" data-tags="${p.tags.join(' ')}" data-id="${i}" tabindex="0" style="--tilt:${tilt}deg">
+      <div class="card-top"><span class="cat">N&deg;${p.entry} · ${p.cat}</span>${stamp}</div>
+      <div class="${notesCls}">${notesHtml}</div>
+      <div class="card-body">
+        <h3>${p.title}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="tags">${p.pills.map(t=>`<span>${t}</span>`).join('')}</div>
+      </div>
+      ${cta}
+    </article>`;
+}).join('');
+
+/* ---------- filter ---------- */
+document.getElementById('filter').addEventListener('click', e=>{
+  const b = e.target.closest('.fb'); if(!b) return;
+  document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const f = b.dataset.f;
+  document.querySelectorAll('.card').forEach(card=>{
+    const tags = (card.dataset.tags||'').split(' ');
+    card.classList.toggle('gone', f!=='all' && !tags.includes(f));
+  });
+});
+
+/* ---------- open the page (modal) ---------- */
+const backdrop = document.getElementById('backdrop');
+const sheetTag = document.getElementById('sheet-tag');
+const sheetTitle = document.getElementById('sheet-title');
+const sheetBody = document.getElementById('sheet-body');
+
+function openPage(i){
+  const p = projects[i]; if(!p) return;
+  sheetTag.innerHTML = `N&deg;${p.entry} · ${p.cat}`;
+  sheetTitle.textContent = p.title;
+  sheetBody.innerHTML = p.detail;
+  sheetBody.scrollTop = 0;
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePage(){
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+grid.addEventListener('click', e=>{
+  const card = e.target.closest('.card'); if(!card) return;
+  openPage(+card.dataset.id);
+});
+grid.addEventListener('keydown', e=>{
+  if(e.key!=='Enter' && e.key!==' ') return;
+  const card = e.target.closest('.card'); if(!card) return;
+  e.preventDefault(); openPage(+card.dataset.id);
+});
+document.getElementById('sheet-x').addEventListener('click', closePage);
+backdrop.addEventListener('click', e=>{ if(e.target===backdrop) closePage(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closePage(); });
+
+/* ---------- live "ink's still wet" clock ---------- */
+const clockEl = document.getElementById('clock');
+function tickClock(){
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  clockEl.textContent = "ink's still wet · " + time;
+}
+tickClock(); setInterval(tickClock, 1000);
+</script>
+</body>
+</html>
