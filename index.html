@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Selected projects in machine learning, computer vision, astrophysics, and simulation.">
+<title>Marie — Selected Projects</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%231F3D7A' stroke-width='8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#edeef1;
+    --surface:#ffffff;
+    --ink:#111418;
+    --ink-2:#4a525e;
+    --ink-3:#7c8592;
+    --line:#dcdfe5;
+    --accent:#1f3d7a;
+    --accent-soft:rgba(31,61,122,.07);
+
+    --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+
+  /* ---------- masthead ---------- */
+  .masthead{border-bottom:1px solid var(--line)}
+  .masthead .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+    flex-wrap:wrap;padding-top:22px;padding-bottom:22px}
+  .wordmark{font-family:var(--serif);font-size:22px;letter-spacing:.01em}
+  .nav{display:flex;gap:26px;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+  .nav a{color:var(--ink-2);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;
+    transition:color .18s ease,border-color .18s ease}
+  .nav a:hover,.nav a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* ---------- intro ---------- */
+  .intro{padding:88px 0 72px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:26px}
+  .intro h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.6vw,68px);
+    line-height:1.08;letter-spacing:-.01em;max-width:16ch;margin-bottom:26px}
+  .intro h1 em{font-style:italic;color:var(--accent)}
+  .intro .lede{font-size:clamp(17px,1.6vw,19px);color:var(--ink-2);max-width:62ch}
+
+  /* ---------- layout ---------- */
+  .body-grid{display:grid;grid-template-columns:220px 1fr;gap:56px;padding:56px 0 96px;align-items:start}
+
+  .rail{position:sticky;top:40px}
+  .rail-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-3);padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:14px}
+  .filters{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+  .fb{font-family:var(--sans);font-size:14.5px;color:var(--ink-2);background:none;border:0;
+    padding:7px 10px;margin-left:-10px;border-radius:3px;cursor:pointer;text-align:left;width:100%;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    transition:background .15s ease,color .15s ease}
+  .fb .n{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .fb:hover{background:var(--accent-soft);color:var(--accent)}
+  .fb.on{background:var(--accent);color:#fff;font-weight:500}
+  .fb.on .n{color:rgba(255,255,255,.72)}
+  .fb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* ---------- project grid ---------- */
+  .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;align-items:start}
+  .card.wide{grid-column:span 2}
+
+  .card{position:relative;display:flex;flex-direction:column;text-align:left;
+    background:var(--surface);border:1px solid var(--line);border-radius:3px;overflow:hidden;
+    cursor:pointer;font:inherit;color:inherit;
+    transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);
+    transform:scaleX(0);transform-origin:left;transition:transform .28s ease}
+  .card:hover,.card:focus-visible{border-color:#c3c8d2;box-shadow:0 10px 30px rgba(17,20,24,.08);transform:translateY(-2px)}
+  .card:hover::before,.card:focus-visible::before{transform:scaleX(1)}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card.gone{display:none}
+
+  .card-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:16px 20px 14px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .status{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .status .d{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .status.progress{color:var(--ink-3)}
+  .status.progress .d{background:transparent;border:1.5px solid var(--ink-3)}
+
+  .media{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line)}
+  .media.two{grid-template-columns:1fr 1fr}
+  .frame{background:#f6f7f9;display:flex;flex-direction:column}
+  .frame img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#e9ebef}
+  .frame figcaption{padding:11px 16px 13px}
+  .frame .cap-t{font-size:13.5px;font-weight:500;line-height:1.35;color:var(--ink)}
+  .frame .cap-d{font-size:12.5px;line-height:1.4;color:var(--ink-3);margin-top:2px}
+
+  .card-body{padding:20px;flex:1;display:flex;flex-direction:column}
+  .card-body h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.2;
+    letter-spacing:.005em;margin-bottom:9px}
+  .card-body .desc{font-size:15px;color:var(--ink-2);line-height:1.5;flex:1}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}
+  .tags span{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-2);
+    background:var(--accent-soft);border-radius:2px;padding:4px 8px}
+
+  .card-cta{display:flex;align-items:center;gap:8px;padding:14px 20px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .card-cta.soon{color:var(--ink-3)}
+  .card-cta .arrow{transition:transform .2s ease}
+  .card:hover .card-cta .arrow{transform:translateX(4px)}
+
+  /* ---------- footer ---------- */
+  .foot{border-top:1px solid var(--line);padding:34px 0 56px;display:flex;flex-wrap:wrap;gap:16px;
+    align-items:center;justify-content:space-between;font-size:14px;color:var(--ink-3)}
+  .foot .links{display:flex;gap:24px}
+  .foot a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .foot a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* ---------- detail dialog ---------- */
+  .backdrop{position:fixed;inset:0;z-index:900;background:rgba(17,20,24,.42);backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    opacity:0;pointer-events:none;transition:opacity .22s ease}
+  .backdrop.open{opacity:1;pointer-events:auto}
+  .sheet{background:var(--surface);border-radius:4px;max-width:720px;width:100%;max-height:88vh;
+    display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(17,20,24,.28);
+    transform:translateY(10px);transition:transform .25s ease}
+  .backdrop.open .sheet{transform:none}
+  .sheet-bar{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+    padding:26px 30px 20px;border-bottom:1px solid var(--line)}
+  .sheet-bar .stag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:8px}
+  .sheet-bar .stitle{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.4vw,32px);line-height:1.15}
+  .x{flex-shrink:0;width:34px;height:34px;border-radius:3px;border:1px solid var(--line);background:none;
+    color:var(--ink-2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:border-color .18s ease,color .18s ease}
+  .x:hover{border-color:var(--accent);color:var(--accent)}
+  .sheet-body{overflow-y:auto;padding:26px 30px 34px}
+  .sheet-body h3{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-3);margin:28px 0 12px;
+    padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .sheet-body h3:first-child{margin-top:0}
+  .sheet-body p{font-size:15.5px;line-height:1.65;color:var(--ink-2);margin-bottom:14px}
+  .sheet-body ul{list-style:none}
+  .sheet-body li{font-size:15px;line-height:1.55;color:var(--ink-2);padding:8px 0 8px 20px;position:relative}
+  .sheet-body li::before{content:'';position:absolute;left:0;top:16px;width:8px;height:1px;background:var(--accent)}
+  .sheet-body li strong{color:var(--ink);font-weight:600}
+  .sheet-body code{font-family:var(--mono);font-size:13px;background:var(--accent-soft);
+    padding:2px 6px;border-radius:2px;color:var(--accent)}
+  .pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill-row span{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--ink-2);
+    background:var(--accent-soft);border-radius:2px;padding:5px 9px}
+  .wip-note{padding:28px 0 12px;border-top:1px solid var(--line)}
+  .wip-note strong{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+  .wip-note p{margin:0}
+
+  @media (max-width:1000px){
+    .body-grid{grid-template-columns:1fr;gap:32px;padding-top:40px}
+    .rail{position:static}
+    .filters{flex-direction:row;flex-wrap:wrap}
+    .fb{width:auto;margin-left:0;border:1px solid var(--line)}
+    .fb .n{display:none}
+  }
+  @media (max-width:760px){
+    .wrap{padding:0 20px}
+    .intro{padding:56px 0 48px}
+    .catalog{grid-template-columns:1fr}
+    .card.wide{grid-column:span 1}
+    .media.two{grid-template-columns:1fr}
+    .sheet-bar,.sheet-body{padding-left:22px;padding-right:22px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="wordmark">Marie</div>
+    <nav class="nav">
+      <a href="https://github.com/mariecjl">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <p class="eyebrow">Physics &amp; Computer Science · Harvard College</p>
+    <h1>Marie&rsquo;s Personal <em>(Fun)</em> Projects</h1>
+    <p class="lede">Personal projects (including ongoing): ML, CV, astrophysics, simulations etc.</p>
+  </div>
+</section>
+
+<main class="wrap" id="work">
+  <div class="body-grid">
+
+    <aside class="rail">
+      <div class="rail-label">Filter</div>
+      <div class="filters" id="filter">
+        <button class="fb on" data-f="all">All <span class="n" data-count="all"></span></button>
+        <button class="fb" data-f="ml">ML <span class="n" data-count="ml"></span></button>
+        <button class="fb" data-f="cv">CV <span class="n" data-count="cv"></span></button>
+        <button class="fb" data-f="astro">Astrophysics <span class="n" data-count="astro"></span></button>
+        <button class="fb" data-f="3d">3D &amp; physics <span class="n" data-count="3d"></span></button>
+        <button class="fb" data-f="tool">Tools <span class="n" data-count="tool"></span></button>
+      </div>
+    </aside>
+
+    <div class="catalog" id="catalog"></div>
+  </div>
+
+  <footer class="foot">
+    <span class="links">
+      <a href="https://github.com/mariecjl">GitHub</a>
+    </span>
+  </footer>
+</main>
+
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet">
+    <div class="sheet-bar">
+      <div>
+        <div class="stag" id="sheet-tag"></div>
+        <h2 class="stitle" id="sheet-title"></h2>
+      </div>
+      <button class="x" id="sheet-x" aria-label="Close">&#x2715;</button>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<script>
+/* ===================================================================
+   PROJECTS
+   tags   — drive the filter (ml / cv / astro / 3d / tool)
+   media  — 1 or 2 preview images. Two images render a wide card.
+   detail — the full write-up shown in the dialog.
+=================================================================== */
+const projects = [
+  {
+    cat:'Machine learning · Computer vision · 3D', title:'Photo to 3D Scene',
+    desc:'Drop in a single photo and step inside it: a monocular depth model turns the flat image into a 3D surface you can look around.',
+    tags:['cv','ml','3d'], pills:['transformers.js','three.js','depth estimation'],
+    media:[
+      {src:'3d2.gif', t:'Drop in any photo to build a depth map', d:'A monocular depth model runs entirely in the browser'},
+      {src:'3d1.gif', t:'Drag to look around the diorama', d:'Tune depth, trim stretched edges, or invert in real time'}
+    ],
+    detail:`<div class="pill-row"><span>transformers.js</span><span>Depth Anything V2</span><span>three.js</span><span>WebGPU</span><span>JavaScript</span></div>
+      <h3>Overview</h3><p>A browser-based tool that turns any single photo into a 3D scene you can look around. It runs a monocular depth-estimation model (Depth Anything V2) entirely on-device through transformers.js, converts the resulting depth map into a displaced 3D surface, and renders it with Three.js — so a flat image becomes a small diorama you can orbit and explore.</p>
+      <h3>How it works</h3><ul><li>Estimates a per-pixel depth map from a single image, with no second camera</li><li>Displaces a fine mesh by depth so nearer regions bulge toward the camera</li><li>Trims triangles that bridge large depth gaps to remove rubber-sheet stretching</li><li>Constrains the orbit so you look around the diorama without seeing its flat edges</li></ul>
+      <h3>Features</h3><ul><li>Runs fully in the browser — drag and drop a photo, no upload or server</li><li>WebGPU acceleration when available, with a WASM CPU fallback</li><li>Live controls for depth amount, edge cutoff, edge trimming, and inverted depth</li><li>Drag to orbit, scroll to zoom, and reset the view at any time</li></ul>`
+  },
+  {
+    cat:'Data visualization · Tools', title:'Wander — A Map of the Rabbit Hole',
+    desc:'Start from one Wikipedia article and watch everything it touches bloom outward into a living constellation.',
+    tags:['tool'], pills:['Wikipedia API','live data','force graph'],
+    media:[ {src:'wander.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>Wikipedia API</span><span>force graph</span><span>Canvas</span><span>JavaScript</span></div>
+      <h3>Overview</h3><p>An interactive knowledge-graph explorer built entirely on live Wikipedia data. Begin from any single article and watch its connections bloom outward into a force-directed constellation of everything it links to, then double-click any node to expand deeper and follow your curiosity one hop at a time. Every node, link, and summary is pulled in real time from Wikipedia's REST and query APIs as you explore.</p>
+      <h3>Features</h3><ul><li>Seed the map from any article — type a topic or pick a suggested starting point</li><li>Force-directed layout that grows organically as new nodes are fetched</li><li>Double-click a node to expand it, or toggle auto-bloom to let the graph grow on its own</li><li>Live article previews: title, summary, and thumbnail from the Wikipedia REST API</li><li>Drag to pan, scroll to zoom, and recenter the view at any time</li><li>Running tally of articles, links, and exploration depth</li><li>Jump straight to any article on Wikipedia from its detail card</li></ul>
+      <h3>Data sources</h3><ul><li>Article summaries and thumbnails via the Wikipedia REST v1 API</li><li>Outbound links via the MediaWiki query API</li><li>No backend — everything is fetched and rendered client-side</li></ul>`
+  },
+  {
+    cat:'3D · Physics', title:'Fingertip Polyhedrons',
+    desc:'Renders arbitrary vertices into interactive polyhedron models with physics-based inertia and rotation.',
+    tags:['3d'], pills:['three.js','WebGL','physics'], wip:true,
+    media:[
+      {src:'polynewa.gif', t:'Dot the vertices to render, move your hand to rotate', d:'See your polyhedron in 3D'},
+      {src:'polynew.gif',  t:'Flick your wrist to spin, pinch to zoom', d:'Physics-based inertia and mass'}
+    ],
+    detail:`<div class="pill-row"><span>three.js</span><span>WebGL</span><span>physics</span><span>JavaScript</span></div>
+      <div class="wip-note"><strong>In progress</strong><p>A full write-up is coming shortly.</p></div>`
+  },
+  {
+    cat:'Computer vision', title:'Object Approach Detector',
+    desc:'Real-time approach detection built on torchvision\u2019s MiDaS module for monocular depth estimation.',
+    tags:['cv','ml'], pills:['PyTorch','MiDaS','depth estimation'],
+    media:[ {src:'approach.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>PyTorch</span><span>torchvision</span><span>MiDaS</span><span>OpenCV</span><span>Python</span></div>
+      <h3>Overview</h3><p>Real-time object approach detection using PyTorch's MiDaS monocular depth estimation over a live OpenCV video stream. The pipeline computes per-frame depth maps, smooths temporal noise, and flags approaching objects with spatial filtering and temporal confirmation.</p>
+      <h3>Features</h3><ul><li>Real-time webcam stream processing with OpenCV</li><li>Monocular depth estimation using MiDaS small</li><li>Temporal depth smoothing to reduce frame-to-frame noise</li><li>Adaptive thresholding using median absolute deviation</li><li>Spatial filtering weighted toward the center of frame</li><li>Temporal confirmation to suppress false positives</li><li>Tracks the approaching object with a bounding box overlay</li></ul>
+      <h3>File structure</h3><ul><li><code>main.py</code> — main application loop</li><li><code>midas_utils.py</code> — model loading and depth inference</li><li><code>detection.py</code> — approach detection logic</li><li><code>config.py</code> — parameters and thresholds</li><li><code>depthdisplay.py</code> — side-by-side camera stream and depth inference</li></ul>`
+  },
+  {
+    cat:'Astrophysics · Machine learning', title:'Tabby\u2019s Star Forecaster',
+    desc:'Predicting flux variations of Tabby\u2019s Star using lag-based features and stochastic forecasting.',
+    tags:['astro','ml'], pills:['scikit-learn','time series','stochastic'],
+    media:[ {src:'tabby.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>Python</span><span>scikit-learn</span><span>pandas</span><span>time series</span><span>stochastic modeling</span></div>
+      <h3>Overview</h3><p>Time-series modeling applied to the light curve of Tabby's Star (KIC 8462852), known for its unusual and irregular dimming. The project transforms the raw series into lag-based features and uses a random forest regressor to forecast short-term flux variations. In parallel, a classifier is trained to identify extreme flux dips under heavy class imbalance. Future variations are generated through recursive forecasting with stochastic noise, propagating uncertainty forward in time.</p>
+      <h3>Data processing</h3><ul><li>Source: Tabby's Star light curve from the NASA Exoplanet Archive (~65K points)</li><li>Preprocessing: filtering, normalization, and selection of ~5K continuous points</li><li>Raw series converted into a supervised dataset using lagged features (default: 10)</li></ul>
+      <h3>Models</h3><ul><li>Random forest regressor for flux forecasting (200 trees)</li><li>Random forest classifier for extreme-event detection, with class-imbalance handling for rare anomalies</li></ul>
+      <h3>Forecasting</h3><ul><li>Recursive loop predicting the next flux value from the regressor</li><li>Stochastic noise scaled to observed volatility, reproducing the star's irregularity</li><li>Sliding prediction window advanced repeatedly for multi-step forecasts</li></ul>`
+  },
+  {
+    cat:'Tools · Machine learning', title:'Read Any Doc, Any Topic',
+    desc:'Upload documents, take notes, query for explanations and examples, and tune the depth of every answer to your background.',
+    tags:['tool','ml'], pills:['LLM','RAG','PDF'], wip:true,
+    media:[
+      {src:'highlighter2.gif', t:'Upload a PDF and understand every detail', d:'Highlight anything unclear for an instant explanation or example'},
+      {src:'highlighter1.gif', t:'Take notes and resolve confusions as they come up', d:'Set the level of expertise you want answers written at'}
+    ],
+    detail:`<div class="pill-row"><span>LLM</span><span>RAG</span><span>pdf.js</span><span>JavaScript</span></div>
+      <div class="wip-note"><strong>In progress</strong><p>A full write-up is coming shortly.</p></div>`
+  },
+  {
+    cat:'Astrophysics · Simulation', title:'N-Body Gravitational Simulation',
+    desc:'A many-body gravity solver used to predict the trajectory of near-Earth asteroid 2011 UL21.',
+    tags:['astro','3d'], pills:['NumPy','gravitation','simulation'], wip:true,
+    media:[
+      {src:'nbodyfast.gif', t:'Simulating an ejection event', d:'Observed in over 80% of the 300+ trials run'},
+      {src:'nbody.png',     t:'Simulation snapshots', d:'Orbital trajectories across a single run'}
+    ],
+    detail:`<div class="pill-row"><span>NumPy</span><span>SciPy</span><span>Python</span><span>simulation</span></div>
+      <div class="wip-note"><strong>In progress</strong><p>A full write-up is coming shortly.</p></div>`
+  },
+  {
+    cat:'Simulation', title:'CivSim — Band to State',
+    desc:'An agent-based civilization simulator where bands of individuals are born, pair, learn, and build their way from the Paleolithic onward.',
+    tags:['ml'], pills:['agent-based modeling','simulation','JavaScript'],
+    media:[
+      {src:'sim1.gif', t:'Watch a society grow from a single band', d:'Agents are born, pair, learn, and build across the eras'},
+      {src:'sim2.gif', t:'Click any agent to inspect their life', d:'Vitals, personality, kinship, and life events'}
+    ],
+    detail:`<div class="pill-row"><span>agent-based modeling</span><span>simulation</span><span>Canvas</span><span>JavaScript</span></div>
+      <h3>Overview</h3><p>An agent-based civilization simulator that grows a society from a single band of hunter-gatherers up through the Paleolithic, Neolithic, Chalcolithic, Bronze, and Classical eras. Each agent lives an individual life — forming relationships, raising children, learning and teaching skills, founding groups, and eventually dying — and the civilization that emerges is the sum of thousands of these small decisions playing out over generations.</p>
+      <h3>Simulation</h3><ul><li>Individually simulated agents with age, sex, personality, vitals, and kinship</li><li>Relationships, pairing, births, and multi-generational family trees</li><li>Knowledge that spreads by teaching, and is lost when those who hold it die</li><li>Groups that grow, fission into new bands, absorb captives, and go to war</li><li>Emergent roles: leaders and succession, healers, shamans, and priests</li><li>A tech tree of discoveries unlocking structures, crops, and livestock across eras</li></ul>
+      <h3>Interface</h3><ul><li>Click any agent on the map to inspect vitals, personality, kinship, and life events</li><li>Live panels for population history, discoveries, society, and group relations</li><li>A narrative chronicle recording births, deaths, conflicts, trade, and environmental events</li><li>World statistics tracking years survived, births, deaths, wars, discoveries, and peak population</li></ul>`
+  },
+  {
+    cat:'Computer vision · Tools', title:'Draw the World',
+    desc:'Turn your hand into a brush — a gesture-controlled virtual drawing app that runs on your camera feed.',
+    tags:['cv','tool'], pills:['OpenCV','MediaPipe','gesture control'],
+    media:[ {src:'drawtheworld.gif', t:'', d:''} ],
+    detail:`<div class="pill-row"><span>OpenCV</span><span>MediaPipe</span><span>NumPy</span><span>Python</span></div>
+      <h3>Overview</h3><p>A gesture-controlled drawing app that lets you draw directly in your camera frame. Built on OpenCV and MediaPipe Hands, it recognizes hand landmarks and processes frames in real time — so you can draw, select colors, toggle the pen, clear the canvas, and take screenshots with hand gestures alone.</p>
+      <h3>Requirements</h3><ul><li>A working webcam and macOS (webcam-specific functions are currently macOS-only)</li><li>Python libraries: OpenCV, MediaPipe, NumPy</li><li>Runs from VS Code or any Python environment</li></ul>
+      <h3>Gestures</h3><ul><li><strong>Draw</strong> — trace your index finger in the air</li><li><strong>Select color</strong> — touch index fingertip to thumb to pick the color under your fingertip</li><li><strong>Toggle pen</strong> — touch middle fingertip to thumb</li><li><strong>Screenshot</strong> — touch ring fingertip to thumb to save the current frame</li><li><strong>Clear canvas</strong> — touch pinky fingertip to thumb</li></ul>
+      <h3>Usage</h3><p>On launch, a drawing window appears (it may take up to 10 seconds). On-screen instructions run along the bottom of the frame, with a screenshots folder icon in the top right. Press <code>Esc</code> to exit.</p>`
+  },
+];
+
+/* ---------- render ---------- */
+const grid = document.getElementById('catalog');
+grid.innerHTML = projects.map((p,i)=>{
+  const wide = p.media.length === 2 ? ' wide' : '';
+  const mediaCls = p.media.length === 2 ? 'media two' : 'media';
+  const mediaHtml = p.media.map(n=>{
+    const cap = (n.t || n.d)
+      ? `<figcaption>${n.t?`<div class="cap-t">${n.t}</div>`:''}${n.d?`<div class="cap-d">${n.d}</div>`:''}</figcaption>`
+      : '';
+    return `<figure class="frame">
+        <img src="${n.src}" alt="${p.title} preview" loading="lazy">
+        ${cap}
+      </figure>`;
+  }).join('');
+  const status = p.wip
+    ? `<span class="status progress"><span class="d"></span>In progress</span>`
+    : `<span class="status"><span class="d"></span>Complete</span>`;
+  const cta = p.wip
+    ? `<div class="card-cta soon">Write-up coming soon</div>`
+    : `<div class="card-cta">View details <span class="arrow">&rarr;</span></div>`;
+
+  return `
+    <article class="card${wide}" data-tags="${p.tags.join(' ')}" data-id="${i}" tabindex="0" role="button"
+             aria-label="Open details for ${p.title}">
+      <div class="card-meta"><span>${p.cat}</span>${status}</div>
+      <div class="${mediaCls}">${mediaHtml}</div>
+      <div class="card-body">
+        <h3>${p.title}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="tags">${p.pills.map(t=>`<span>${t}</span>`).join('')}</div>
+      </div>
+      ${cta}
+    </article>`;
+}).join('');
+
+/* ---------- filter counts ---------- */
+document.querySelectorAll('.n').forEach(el=>{
+  const f = el.dataset.count;
+  el.textContent = f==='all' ? projects.length : projects.filter(p=>p.tags.includes(f)).length;
+});
+
+/* ---------- filter ---------- */
+document.getElementById('filter').addEventListener('click', e=>{
+  const b = e.target.closest('.fb'); if(!b) return;
+  document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const f = b.dataset.f;
+  document.querySelectorAll('.card').forEach(card=>{
+    const tags = (card.dataset.tags||'').split(' ');
+    card.classList.toggle('gone', f!=='all' && !tags.includes(f));
+  });
+});
+
+/* ---------- detail dialog ---------- */
+const backdrop  = document.getElementById('backdrop');
+const sheetTag  = document.getElementById('sheet-tag');
+const sheetTitle= document.getElementById('sheet-title');
+const sheetBody = document.getElementById('sheet-body');
+let lastFocus = null;
+
+function openPage(i){
+  const p = projects[i]; if(!p) return;
+  lastFocus = document.activeElement;
+  sheetTag.textContent = p.cat;
+  sheetTitle.textContent = p.title;
+  sheetBody.innerHTML = p.detail;
+  sheetBody.scrollTop = 0;
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('sheet-x').focus();
+}
+function closePage(){
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+  if(lastFocus) lastFocus.focus();
+}
+grid.addEventListener('click', e=>{
+  const card = e.target.closest('.card'); if(!card) return;
+  openPage(+card.dataset.id);
+});
+grid.addEventListener('keydown', e=>{
+  if(e.key!=='Enter' && e.key!==' ') return;
+  const card = e.target.closest('.card'); if(!card) return;
+  e.preventDefault(); openPage(+card.dataset.id);
+});
+document.getElementById('sheet-x').addEventListener('click', closePage);
+backdrop.addEventListener('click', e=>{ if(e.target===backdrop) closePage(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closePage(); });
+</script>
+</body>
+</html>
