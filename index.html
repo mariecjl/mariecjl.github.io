@@ -248,12 +248,12 @@
 =================================================================== */
 const projects = [
   {
-    cat:'Machine learning · Computer vision · 3D', title:'Photo to 3D Scene',
-    desc:'Drop in a single photo and step inside it: a monocular depth model turns the flat image into a 3D surface you can look around.',
+    cat:'Machine learning · Computer vision · 3D', title:'Scenify (Chrome Extension): Transforming any Photo to 3D Scene',
+    desc:'Select any scene and step inside it: using a monocular depth model to turn flat images into realistic 3D scenes.',
     tags:['cv','ml','3d'], pills:['transformers.js','three.js','depth estimation'],
     media:[
-      {src:'3d2.gif', t:'Drop in any photo to build a depth map', d:'A monocular depth model runs entirely in the browser'},
-      {src:'3d1.gif', t:'Drag to look around the diorama', d:'Tune depth, trim stretched edges, or invert in real time'}
+      {src:'scenify2.gif', t:'Drop in any photo to build a depth map', d:'A monocular depth model runs entirely in the browser'},
+      {src:'scenify.gif', t:'Drag to look around the diorama', d:'Also supports dragging/selecting for 3D viewing.'}
     ],
     detail:`<div class="pill-row"><span>transformers.js</span><span>Depth Anything V2</span><span>three.js</span><span>WebGPU</span><span>JavaScript</span></div>
       <h3>Overview</h3><p>A browser-based tool that turns any single photo into a 3D scene you can look around. It runs a monocular depth-estimation model (Depth Anything V2) entirely on-device through transformers.js, converts the resulting depth map into a displaced 3D surface, and renders it with Three.js — so a flat image becomes a small diorama you can orbit and explore.</p>
